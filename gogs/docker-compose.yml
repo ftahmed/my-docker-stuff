@@ -1,0 +1,36 @@
+version: '2'
+volumes:
+  gogs-data:
+  gogs-db-data:
+services:
+  gogs-mta:
+    image: relaxart/docker-sendmail
+    container_name: gogs-mta
+    ports:
+      - 25
+
+  gogs-db:
+    image: postgres:latest
+    container_name: gogs-db
+    ports:
+      - 5432
+    volumes:
+      - gogs-db-data:/data
+    environment:
+      - PGDATA=/data
+      - POSTGRES_DB=gogs
+      - POSTGRES_USER=gogsuser
+      - POSTGRES_PASSWORD=gogspass
+
+  gogs:
+    image: gogs/gogs
+    container_name: gogs
+    links:
+      - gogs-mta
+      - gogs-db
+    volumes:
+      - gogs-data:/data
+    ports:
+      - "3022:22"
+      - "3000:3000"
+
