@@ -1,0 +1,35 @@
+version: '2'
+volumes:
+  sonar-db-data:
+services:
+  sonar-db:
+    image: mysql
+    container_name: sonar-db
+    volumes:
+      - sonar-db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    command: [mysqld, --max-allowed-packet=16M]
+    networks:
+      - build
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube:alpine
+    links:
+      - sonar-db:db
+    ports:
+      - "19000:9000"
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:mysql://db/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&createDatabaseIfNotExist=true
+      - SONARQUBE_JDBC_USERNAME=root
+      - SONARQUBE_JDBC_PASSWORD=123456
+    volumes_from:
+      - plugins
+    restart: always
+    networks:
+      - build
+  plugins:
+    build: plugins
+networks:
+  build:
+    driver: bridge
