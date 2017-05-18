@@ -1,3 +1,6 @@
 [submodule "iot-sensor-simulator"]
 	path = iot-sensor-simulator
 	url = https://github.com/mgarciap/iot-sensor-simulator.git
+[submodule "superset"]
+	path = superset
+	url = https://github.com/amancevice/superset.git

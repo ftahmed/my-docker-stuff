@@ -13,15 +13,17 @@ services:
       - "8086:8086"
     environment:
       - INFLUXDB_ADMIN_ENABLED=true
+    restart: always
   grafana-xxl:
     image: monitoringartist/grafana-xxl:latest
     container_name: grafana-xxl
     volumes:
       - grafana-xxl-data:/var/lib/grafana
     ports:
-      - "3000:3000"
+      - "3100:3000"
     links:
       - influxdb
+    restart: always
   glances:
     image: nicolargo/glances
     container_name: glances
@@ -43,6 +45,7 @@ services:
     # influxdb export mode
     environment:
       - GLANCES_OPT=--export-influxdb -t 3 -d -q
+    restart: always
 
 
 
