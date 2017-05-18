@@ -46,6 +46,13 @@ services:
     environment:
       - GLANCES_OPT=--export-influxdb -t 3 -d -q
     restart: always
-
+  telegraf:
+    image: telegraf
+    container_name: telegraf
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro 
+    links:
+      - influxdb
 
 
