@@ -10,6 +10,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=123456
     command: [mysqld, --max-allowed-packet=16M]
+    restart: always
     networks:
       - build
   sonarqube:
