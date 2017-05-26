@@ -3,16 +3,10 @@
 	url = https://github.com/mgarciap/iot-sensor-simulator.git
 [submodule "superset"]
 	path = superset
-	url = https://github.com/amancevice/superset.git
+	url = https://github.com/ftahmed/superset.git
 [submodule "postgres-docker-cluster"]
 	path = postgres-docker-cluster
 	url = https://github.com/ftahmed/postgres-docker-cluster.git
 [submodule "barman-docker"]
 	path = barman-docker
 	url = https://github.com/ftahmed/barman-docker.git
-[submodule "docker-barman"]
-	path = docker-barman
-	url = https://github.com/ftahmed/docker-barman.git
-[submodule "docker-barman-1"]
-	path = docker-barman-1
-	url = https://github.com/ftahmed/docker-barman-1.git
