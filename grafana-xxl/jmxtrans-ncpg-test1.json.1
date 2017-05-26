@@ -1,0 +1,79 @@
+{
+   "servers":[
+      {
+         "host" : "192.168.0.175",
+         "port" : "7091",
+         "numQueryThreads" : 2,
+         "queries":[
+            {
+               "obj":"java.lang:type=OperatingSystem",
+               "attr":[ "SystemLoadAverage" ],
+               "resultAlias":"jvmCPU",
+               "outputWriters":[
+                  {
+                     "@class":"com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+                     "database": "jmxDB",
+                     "username" : "admin",
+                     "password" : "admin",
+              	     "url": "http://localhost:8086"
+                  },
+                  {
+                     "@class" : "com.googlecode.jmxtrans.model.output.StdOutWriter"
+                  }
+               ]
+            },
+            {
+               "obj" : "java.lang:type=GarbageCollector,name=PS MarkSweep",
+               "attr" : [ "LastGcInfo" ],
+               "resultAlias":"jvmGarbageCollector",
+               "outputWriters":[
+                  {
+                     "@class":"com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+                     "database": "jmxDB",
+                     "username" : "admin",
+                     "password" : "admin",
+              	     "url": "http://localhost:8086"
+                  },
+                  {
+                     "@class" : "com.googlecode.jmxtrans.model.output.StdOutWriter"
+                  }
+               ]
+            },
+            {
+               "obj" : "java.lang:type=Memory",
+               "attr" : [ "HeapMemoryUsage", "NonHeapMemoryUsage" ],
+               "resultAlias":"jvmMemory",
+               "outputWriters":[
+                  {
+                     "@class":"com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+                     "database": "jmxDB",
+                     "username" : "admin",
+                     "password" : "admin",
+              	     "url": "http://localhost:8086"
+                  },
+                  {
+                     "@class" : "com.googlecode.jmxtrans.model.output.StdOutWriter"
+                  }
+               ]
+            },
+            {
+               "obj" : "java.lang:type=MemoryPool,name=PS Old Gen",
+               "attr" : [ "Usage" ],
+               "resultAlias":"jvmMemoryPool",
+               "outputWriters":[
+                  {
+                     "@class":"com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+                     "database": "jmxDB",
+                     "username" : "admin",
+                     "password" : "admin",
+              	     "url": "http://localhost:8086"
+                  },
+                  {
+                     "@class" : "com.googlecode.jmxtrans.model.output.StdOutWriter"
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

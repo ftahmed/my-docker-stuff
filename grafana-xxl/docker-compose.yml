@@ -8,6 +8,11 @@ services:
     container_name: influxdb
     volumes:
       - influxdb-data:/var/lib/influxdb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     ports:
       - "8083:8083"
       - "8086:8086"
@@ -44,8 +49,8 @@ services:
     #  - GLANCES_OPT=-w
     # influxdb export mode
     environment:
-      - GLANCES_OPT=--export-influxdb -t 3 -d -q
-    restart: always
+      - GLANCES_OPT=--export-influxdb -t 10 -d -q
+    #restart: no
   telegraf:
     image: telegraf
     container_name: telegraf

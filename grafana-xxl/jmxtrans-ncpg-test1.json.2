@@ -1,0 +1,110 @@
+{
+   "servers":[
+      {
+         "host" : "192.168.0.175",
+         "port" : "7091",
+         "numQueryThreads" : 2,
+         "queries":[
+            {
+               "obj":"java.lang:type=OperatingSystem",
+               "attr":[ 
+                  "SystemLoadAverage",
+                  "AvailableProcessors",
+                  "TotalPhysicalMemorySize",
+                  "FreePhysicalMemorySize",
+                  "TotalSwapSpaceSize",
+                  "FreeSwapSpaceSize",
+                  "OpenFileDescriptorCount",
+                  "MaxFileDescriptorCount"
+               ],
+               "resultAlias":"jvmCPU",
+               "outputWriters":[
+                  {
+                     "@class":"com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+                     "database": "jmxDB",
+                     "username" : "admin",
+                     "password" : "admin",
+              	     "url": "http://localhost:8086"
+                  },
+                  {
+                     "@class" : "com.googlecode.jmxtrans.model.output.StdOutWriter"
+                  }
+               ]
+            },
+            {
+               "obj" : "java.lang:type=GarbageCollector,name=*",
+               "attr" : [ "CollectionCount", "CollectionTime" ],
+               "resultAlias":"jvmGC",
+               "outputWriters":[
+                  {
+                     "@class":"com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+                     "database": "jmxDB",
+                     "username" : "admin",
+                     "password" : "admin",
+              	     "url": "http://localhost:8086"
+                  },
+                  {
+                     "@class" : "com.googlecode.jmxtrans.model.output.StdOutWriter"
+                  }
+               ]
+            },
+            {
+               "obj" : "java.lang:type=Memory",
+               "attr" : [ "HeapMemoryUsage", "NonHeapMemoryUsage" ],
+               "resultAlias":"jvmMemory",
+               "outputWriters":[
+                  {
+                     "@class":"com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+                     "database": "jmxDB",
+                     "username" : "admin",
+                     "password" : "admin",
+              	     "url": "http://localhost:8086"
+                  },
+                  {
+                     "@class" : "com.googlecode.jmxtrans.model.output.StdOutWriter"
+                  }
+               ]
+            },
+            {
+               "obj" : "java.lang:type=MemoryPool,name=*",
+               "attr" : [ "Usage" ],
+               "resultAlias":"jvmMemPool",
+               "outputWriters":[
+                  {
+                     "@class":"com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+                     "database": "jmxDB",
+                     "username" : "admin",
+                     "password" : "admin",
+              	     "url": "http://localhost:8086"
+                  },
+                  {
+                     "@class" : "com.googlecode.jmxtrans.model.output.StdOutWriter"
+                  }
+               ]
+            },
+            {
+               "obj" : "java.lang:type=Threading",
+               "attr" : [ 
+                  "DaemonThreadCount",
+                  "PeakThreadCount",
+                  "ThreadCount",
+                  "TotalStartedThreadCount"
+                ],
+               "resultAlias":"jvmThreads",
+               "outputWriters":[
+                  {
+                     "@class":"com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+                     "database": "jmxDB",
+                     "username" : "admin",
+                     "password" : "admin",
+              	     "url": "http://localhost:8086"
+                  },
+                  {
+                     "@class" : "com.googlecode.jmxtrans.model.output.StdOutWriter"
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}
