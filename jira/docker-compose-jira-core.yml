@@ -1,0 +1,24 @@
+version: '2'
+volumes:
+  atlassian-jira-db-data:
+services:
+  atlassian-jira-db:
+    image: postgres:latest
+    container_name: atlassian-jira-db
+    ports:
+      - 15432:5432
+    volumes:
+      - atlassian-jira-db-data:/data
+    environment:
+      - PGDATA=/data
+      - POSTGRES_DB=jira
+      - POSTGRES_USER=jirauser
+      - POSTGRES_PASSWORD=jirapass
+
+  atlassian-jira:
+    image: cptactionhank/atlassian-jira:latest
+    container_name: atlassian-jira
+    links:
+      - atlassian-jira-db
+    ports:
+      - 18080:8080
