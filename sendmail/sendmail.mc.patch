@@ -1,0 +1,45 @@
+--- sendmail.mc.orig	2017-03-23 18:07:06.000000000 +0000
++++ sendmail.mc	2018-01-27 16:20:45.753151384 +0000
+@@ -23,7 +23,8 @@
+ dnl # Uncomment and edit the following line if your outgoing mail needs to
+ dnl # be sent out through an external mail server:
+ dnl #
+-dnl define(`SMART_HOST', `smtp.your.provider')dnl
++define(`SMART_HOST', `mailout-proxy-01.metafour.com')dnl
++define(`RELAY_MAILER_ARGS', `TCP $h 9925')dnl
+ dnl #
+ define(`confDEF_USER_ID', ``8:12'')dnl
+ dnl define(`confAUTO_REBUILD')dnl
+@@ -57,10 +58,10 @@
+ dnl # Complete usage:
+ dnl #     make -C /etc/pki/tls/certs usage
+ dnl #
+-dnl define(`confCACERT_PATH', `/etc/pki/tls/certs')dnl
+-dnl define(`confCACERT', `/etc/pki/tls/certs/ca-bundle.crt')dnl
+-dnl define(`confSERVER_CERT', `/etc/pki/tls/certs/sendmail.pem')dnl
+-dnl define(`confSERVER_KEY', `/etc/pki/tls/certs/sendmail.pem')dnl
++define(`confCACERT_PATH', `/etc/pki/tls/certs')dnl
++define(`confCACERT', `/etc/pki/tls/certs/ca-bundle.crt')dnl
++define(`confSERVER_CERT', `/etc/pki/tls/certs/sendmail.pem')dnl
++define(`confSERVER_KEY', `/etc/pki/tls/certs/sendmail.pem')dnl
+ dnl #
+ dnl # This allows sendmail to use a keyfile that is shared with OpenLDAP's
+ dnl # slapd, which requires the file to be readble by group ldap
+@@ -115,7 +116,7 @@
+ dnl # 127.0.0.1 and not on any other network devices. Remove the loopback
+ dnl # address restriction to accept email from the internet or intranet.
+ dnl #
+-DAEMON_OPTIONS(`Port=smtp,Addr=127.0.0.1, Name=MTA')dnl
++DAEMON_OPTIONS(`Port=smtp, Name=MTA')dnl
+ dnl #
+ dnl # The following causes sendmail to additionally listen to port 587 for
+ dnl # mail from MUAs that authenticate. Roaming users who can't reach their
+@@ -133,7 +134,7 @@
+ dnl #
+ dnl # For this to work your OpenSSL certificates must be configured.
+ dnl #
+-dnl DAEMON_OPTIONS(`Port=smtps, Name=TLSMTA, M=s')dnl
++DAEMON_OPTIONS(`Port=smtps, Name=TLSMTA, M=s')dnl
+ dnl #
+ dnl # The following causes sendmail to additionally listen on the IPv6 loopback
+ dnl # device. Remove the loopback address restriction listen to the network.
