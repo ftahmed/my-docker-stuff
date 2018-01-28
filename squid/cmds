@@ -1,0 +1,18 @@
+docker build -t my-squid .
+
+#docker run --rm -ti -p 8080:80 -p 8443:443 -v $(pwd)/conf:/etc/squid --name squid_test my-squid
+docker run --rm -d -p 8080:80 -p 8443:443 -v $(pwd)/conf:/etc/squid --name squid_test my-squid
+docker exec -ti squid_test bash -c 'tail -f /var/log/squid/access.log'
+
+/etc/hosts
+127.0.0.1 www.example.com
+
+docker run -d --rm -p8000:80 -v $(pwd)/html/http:/usr/local/apache2/htdocs/ --name http_test httpd:2.4
+curl http://www.example.com:8000
+http://
+
+docker run -d --rm -p8888:80 -v $(pwd)/html/https:/usr/local/apache2/htdocs/ --name https_test httpd:2.4
+curl -k https://www.example.com:8443
+https://
+
+docker stop squid_test http_test https_test
