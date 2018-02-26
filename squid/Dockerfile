@@ -9,6 +9,7 @@ RUN set -e && \
 
 # Redirect logs to stdout for the container
 #RUN ln -sf /dev/stdout /var/log/squid/access.log
+#RUN ln -sf /proc/1/fd/1 /var/log/squid/access.log
 
 EXPOSE 80
 EXPOSE 443
